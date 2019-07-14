@@ -5,6 +5,10 @@ require 'azure/storage/blob'
 class Downloader
   attr_reader :container_name, :blob_name
 
+  def self.open(container_name, blob_name, &block)
+    new(container_name, blob_name).open(&block)
+  end
+
   def initialize(container_name, blob_name)
     @container_name = container_name
     @blob_name = blob_name
@@ -24,11 +28,11 @@ class Downloader
   end
 
   def basename
-    @basename ||= File.basename(blob_name)
+    @basename ||= File.basename(blob_name, extname)
   end
 
   def timestamp
-    @timestamp ||= Time.now
+    @timestamp ||= Time.now.to_i
   end
 
   def tmp_file_name

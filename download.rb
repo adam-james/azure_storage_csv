@@ -4,10 +4,8 @@ require_relative './downloader'
 CONTAINER_NAME = 'csv-data'
 BLOB_NAME = 'data.csv'
 
-downloader = Downloader.new(CONTAINER_NAME, BLOB_NAME)
-
 puts 'Downloading...'
-downloader.open do |file_name|
+Downloader.open(CONTAINER_NAME, BLOB_NAME) do |file_name|
   row_number = 1
 
   CSV.foreach(file_name, headers: true) do |row|
